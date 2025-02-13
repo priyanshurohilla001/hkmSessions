@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Teacher {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  phone        String
+  password     String
+  groups       Group[]  @relation("TeacherGroups")
+  courses      Course[] @relation("TeacherCourses")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+  refreshToken String?
+}
+
+model Student {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  phone         String
+  password      String
+  studentGroups StudentGroup[]
+  attendances   Attendance[]   @relation("StudentAttendence")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now()) @updatedAt
+  refreshToken  String?
+}
+
+model Group {
+  id            Int            @id @default(autoincrement())
+  name          String
+  description   String
+  groupCode     String         @unique
+  teacherId     Int
+  teacher       Teacher        @relation("TeacherGroups", fields: [teacherId], references: [id])
+  courses       Course[]       @relation("GroupCourses")
+  studentGroups StudentGroup[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now()) @updatedAt
+}
+
+model StudentGroup {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  groupId   Int
+  joinedAt  DateTime @default(now())
+  student   Student  @relation(fields: [studentId], references: [id])
+  group     Group    @relation(fields: [groupId], references: [id])
+
+  @@unique([studentId, groupId])
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  name        String
+  imgUrl      String
+  description String
+  teacherId   Int
+  teacher     Teacher  @relation("TeacherCourses", fields: [teacherId], references: [id])
+  groups      Group[]  @relation("GroupCourses")
+  lessons     Lesson[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}
+
+model Lesson {
+  id          Int          @id @default(autoincrement())
+  name        String
+  startTime   DateTime
+  endTime     DateTime
+  description String
+  courseId    Int
+  course      Course       @relation(fields: [courseId], references: [id])
+  attendance  Attendance[]
+  qrCodeLink  String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
+}
+
+model Attendance {
+  id        Int      @id @default(autoincrement())
+  studentId Int
+  student   Student  @relation("StudentAttendence", fields: [studentId], references: [id])
+  lessonId  Int
+  lesson    Lesson   @relation(fields: [lessonId], references: [id])
+  status    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
