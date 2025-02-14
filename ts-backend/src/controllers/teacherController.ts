@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-import { teacherLoginSchema, teacherSignupSchema } from "@/zodSchema";
+import { teacherLoginSchema, teacherSignupSchema } from "../zodSchema";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
-const prisma = new PrismaClient();
+import prisma from "../prisma";
 
 export const teacherSignUpController = async (req: Request, res: Response): Promise<any>=> {
   // Validate input with trimmed data (via zod preprocess)

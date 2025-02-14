@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import teacherRouter from './routes/teacherRoutes.js';
-import prisma from './prisma.js';
+import teacherRouter from './routes/teacherRoutes';
+import prisma from './prisma';
 
 const app = express();
 app.use(cors());

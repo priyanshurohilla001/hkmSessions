@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { teacherSignUpController, teacherLoginController } from '../controllers/teacherController.js';
-import { teacherAuthMiddleware } from '@/middleware/authMiddleware.js';
-import { teacherCreateGroup } from '@/controllers/teacherGroupController.js';
+import { teacherSignUpController, teacherLoginController } from '@/controllers/teacherController';
+import { teacherAuthMiddleware } from '@/middleware/authMiddleware';
+import { teacherCreateGroup } from '@/controllers/teacherGroupController';
 
 const router = Router();
 

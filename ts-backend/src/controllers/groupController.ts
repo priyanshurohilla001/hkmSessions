@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import prisma from "@/prisma";
-import { groupCreateSchema } from "@/zodSchema";
+import prisma from "../prisma";
+import { groupCreateSchema } from "../zodSchema";
 
-export const teacherCreateGroup = async (
+export const createGroup = async (
   req: Request,
   res: Response
 ): Promise<any> => {

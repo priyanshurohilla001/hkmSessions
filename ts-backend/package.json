@@ -1,11 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "dist/server.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node dist/server.js",
-    "dev": "npm run build && node dist/server.js",
+    "start": "npm run build && node dist/index.js",
+    "dev": "npm run build && node dist/index.js",
     "clean": "rm -rf dist"
   },
   "keywords": [],
