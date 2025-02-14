@@ -1,0 +1,5 @@
+200 OK: For successful GET requests or operations that return existing data.
+201 Created: When a new resource (like a teacher) is successfully created.
+422 Unprocessable Entity: When request data fails validation.
+409 Conflict: For cases like duplicate entries (e.g., email already exists).
+500 Internal Server Error: For any unexpected server errors.
